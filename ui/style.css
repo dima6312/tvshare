@@ -1,0 +1,109 @@
+/* Dark mode styles */
+/* Link styles in dark mode */
+.dark-mode a {
+    color: lightskyblue; /* Light blue link color */
+}
+
+/* Light mode styles */
+.light-mode a {
+    color: #07416d; /* Darker pastel blue link color */
+}
+
+.dark-mode {
+    background-color: #1c1c1e; /* Dark background color */
+    color: #ffffff; /* Light text color */
+}
+
+.dark-mode h2 {
+    color: #ffffff; /* Light text color for headings */
+}
+
+.dark-mode table {
+    border-color: #ffffff; /* Light border color for tables */
+}
+
+.dark-mode th, .dark-mode td {
+    color: #ffffff; /* Light text color for table headers and data cells */
+    border-color: #ffffff; /* Light border color for table headers and data cells */
+}
+
+/* Change button styles to btn-secondary in dark mode */
+.dark-mode .btn-outline-secondary {
+    background-color: #747d85; /* Dark button background color */
+    border-color: #747d85; /* Dark button border color */
+    color: #ffffff; /* Light text color for buttons */
+}
+
+/* Change btn-outline-dark to btn-outline-light in dark mode */
+.dark-mode .btn-outline-dark {
+    color: #ffffff; /* Light text color for btn-outline-dark in dark mode */
+    border-color: #ffffff; /* Light border color for btn-outline-dark in dark mode */
+}
+
+.dark-mode body {
+    background-color: #343a40;
+}
+
+        /* end dark mode */
+
+        body {
+            font-size:0.9rem;
+            background-color: #fafafa;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin: 15px 0 15px 0px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .highlight {
+        font-weight: bold;
+    }
+
+        /* Style for the input field and submit button */
+        #urlForm {
+            display: flex;
+        }
+
+        #urlInput {
+            flex-grow: 1;
+            padding: 5px;
+            border: 1px solid black;
+        }
+        .inline h2{
+            display: inline-block;
+            margin-right: 5px;
+        }
+        button#clearHistoryButton {
+          margin-bottom: 8px;
+        }
+
+        .loading .spinner {
+            margin: auto;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+          }
+          
+          @keyframes spin {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }

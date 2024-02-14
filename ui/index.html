@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>TV Share Control Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+    <div class="container">
+        <div id="submitUrl">
+            <h2>Send URL to TV</h2>
+            <form id="urlForm" autocomplete="off" novalidate>
+                <div class="input-group mb-3">
+                    <input id="urlInput" type="text" class="form-control" placeholder="URL" aria-label="URL"
+                        aria-describedby="basic-addon2">
+                        <button class="btn btn-outline-secondary" id="pasteBtn" type="button">Paste</button>
+                        <button class="btn btn-primary" type="submit">Send</button>
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <div class="inline">
+                <h2>URL History</h2>
+                <button id="clearHistoryButton" class="btn btn-outline-danger btn-sm">X</button>
+            </div>
+                <div class="table-responsive">
+                    <table id="historyTable" class="table table-striped">
+                        <thead>
+                            <tr id="loader">
+                                <td colspan="2" class="loading">
+                                  <div class="spinner"></div>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div>
+                <p>View the last saved URL within <span id="duration">X</span> minutes at: <a id="lastSavedUrl" href="#" target="_blank">unknown</a></p>
+                <button id="darkModeToggle" class="btn btn-outline-dark btn-sm">Toggle dark mode</button>
+                <button id="refreshBtn" class="btn btn-outline-dark btn-sm">Refresh</button>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="bootstrap.min.js"></script> -->
+</body>
+
+</html>

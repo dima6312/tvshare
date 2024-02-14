@@ -1,0 +1,21 @@
+{ 
+
+  "name": "TV Share (web)",
+
+  "short_name": "TV Share (web)", 
+
+  "start_url": "/", 
+
+  "display": "standalone", 
+
+  "icons": [{ 
+
+    "src": "180.png", 
+
+    "sizes": "180x180", 
+
+    "type": "image/png" 
+
+  }] 
+
+}
