@@ -28,6 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($data['url'])) {
         $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
         
+        // Check if $history is null and initialize as an empty array if so
+        if ($history === null) {
+            $history = [];
+        }
+        
         // Prepend the new URL with timestamp
         array_unshift($history, ['url' => $data['url'], 'timestamp' => time()]);
         
