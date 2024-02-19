@@ -1,10 +1,8 @@
 { 
 
-  "name": "TV Share (web)",
+  "name": "TV Share",
 
-  "short_name": "TV Share (web)", 
-
-  "start_url": "/", 
+  "short_name": "TV Share", 
 
   "display": "standalone", 
 

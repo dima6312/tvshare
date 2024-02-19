@@ -9,6 +9,17 @@
     color: #07416d; /* Darker pastel blue link color */
 }
 
+.dark-mode .accordion-button:is(.collapsed)::after {
+    /* Assuming the arrow uses an SVG background or content property */
+    filter: invert(100%); /* Inverts the color, turning black to white */
+}
+
+/* Or if using Bootstrap icons that are inserted as content */
+.dark-mode .accordion-button:is(.collapsed) {
+    /* Direct color change; replace 'currentColor' if Bootstrap uses a different property */
+    --bs-accordion-btn-color: #fff; /* Adjust based on your actual variable names */
+}
+
 .dark-mode {
     background-color: #1c1c1e; /* Dark background color */
     color: #ffffff; /* Light text color */
@@ -42,6 +53,25 @@
 
 .dark-mode body {
     background-color: #343a40;
+}
+
+.dark-mode .accordion-button {
+    background-color: #333; /* Dark background for accordion header */
+    color: #fff; /* Light text color */
+}
+
+.dark-mode .accordion-body {
+    background-color: #222; /* Slightly lighter dark background for accordion body */
+    color: #ccc; /* Lighter text color for readability */
+}
+
+.dark-mode .accordion-button.collapsed {
+    color: #ccc; /* Ensure collapsed headers are also styled */
+}
+
+.dark-mode .alert-primary {
+    background-color: #0056b3; /* Adjusted primary color for dark mode */
+    color: #ffffff;
 }
 
         /* end dark mode */
@@ -83,9 +113,16 @@
             display: inline-block;
             margin-right: 5px;
         }
-        button#clearHistoryButton {
+        button#clearHistoryButton,button#refreshBtn {
           margin-bottom: 8px;
         }
+
+        #bookmarklet a {
+            display: inline-block;
+            margin: 5px;
+            text-decoration: none;
+            color: #000;
+          }
 
         .loading .spinner {
             margin: auto;

@@ -17,11 +17,34 @@ function timeAgo(timestamp) {
     }
 }
 
+var bookmarkletHref = "javascript:(function(){window.open('" + config.apiEndpoint + "?save=' + encodeURIComponent(document.location.href), 'savePopup', 'width=400,height=550');})();";
+
+function copyBookmarkletCode() {
+    // navigator.clipboard.writeText(bookmarkletHref)
+    // alert("Copied the bookmarklet code.");
+
+    if (bookmarkletHref && navigator.clipboard) {
+        navigator.clipboard.writeText(bookmarkletHref)
+            .then(() => {
+                alert('Copied the bookmarklet code. Browsers remove javascript: before the code for security reaons. Be sure to add javascript: before the copied code manually when creating the bookmark');
+            })
+            .catch(err => {
+                console.error('Error copying bookmarklet code: ', err);
+            });
+    } else {
+        console.error('navigator.clipboard is not supported or globalBookmarkletHref is undefined');
+    }
+
+    
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('lastSavedUrl').href = config.apiEndpoint;
     document.getElementById('lastSavedUrl').textContent = config.apiEndpoint;
     document.getElementById('duration').textContent = config.duration;
+    document.getElementById('bookmarkletLink').href = bookmarkletHref;
+    document.getElementById('bookmarkletCode').textContent = bookmarkletHref;
 
     const historyTableBody = document.getElementById('historyTable').getElementsByTagName('tbody')[0];
 

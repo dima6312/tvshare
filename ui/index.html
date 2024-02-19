@@ -32,6 +32,7 @@
             <div class="inline">
                 <h2>URL History</h2>
                 <button id="clearHistoryButton" class="btn btn-outline-danger btn-sm">X</button>
+                <button id="refreshBtn" class="btn btn-outline-primary btn-sm">↻</button>
             </div>
                 <div class="table-responsive">
                     <table id="historyTable" class="table table-striped">
@@ -47,15 +48,43 @@
                     </table>
                 </div>
             </div>
-            
             <div>
                 <p>View the last saved URL within <span id="duration">X</span> minutes at: <a id="lastSavedUrl" href="#" target="_blank">unknown</a></p>
+                <div class="accordion">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Bookmark the script to send the URL to server
+                        </button>
+                      </h2>
+                      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <p>Drag this link to your bookmarks bar or right-click to bookmark it: <a id="bookmarkletLink" href="#" title="Send to TV">Send to TV</a></p>
+                            <p>Or, copy this code and create a new bookmark with it:<br \>
+                            <code id="bookmarkletCode"></code></p>
+                            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                </symbol>
+                              </svg>
+                              <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use xlink:href="#info-fill"/></svg>
+                                <div>
+                                    Browsers remove <b>javascript:</b> before the code for security reaons. Be sure to add <b>javascript:</b> before the copied code manually when creating the bookmark
+                                </div>
+                              </div>
+                            <button id="copyBookmarklet" class="btn btn-outline-dark btn-sm" onclick="copyBookmarkletCode()">Copy Code</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="mt-3">
                 <button id="darkModeToggle" class="btn btn-outline-dark btn-sm">Toggle dark mode</button>
-                <button id="refreshBtn" class="btn btn-outline-dark btn-sm">Refresh</button>
             </div>
         </div>
     </div>
-    <!-- <script src="bootstrap.min.js"></script> -->
+    <script src="bootstrap.min.js"></script>
 </body>
 
 </html>
