@@ -20,9 +20,6 @@ function timeAgo(timestamp) {
 var bookmarkletHref = "javascript:(function(){window.open('" + config.apiEndpoint + "?save=' + encodeURIComponent(document.location.href), 'savePopup', 'width=400,height=550');})();";
 
 function copyBookmarkletCode() {
-    // navigator.clipboard.writeText(bookmarkletHref)
-    // alert("Copied the bookmarklet code.");
-
     if (bookmarkletHref && navigator.clipboard) {
         navigator.clipboard.writeText(bookmarkletHref)
             .then(() => {
@@ -38,7 +35,28 @@ function copyBookmarkletCode() {
     
 }
 
+(function setInitialTheme() {
+    const storedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Use stored theme; if none, check system preference; default to 'light' if neither applies
+    const themeToApply = storedTheme ? storedTheme : (systemPrefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-bs-theme', themeToApply);
+    const toggleButtonText = themeToApply === 'dark' ? 'Light Mode' : 'Dark Mode';
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('darkModeToggle').textContent = toggleButtonText;
+    });
+})();
+
+
 document.addEventListener('DOMContentLoaded', function() {
+
+  document.getElementById('darkModeToggle').addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-bs-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-bs-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.getElementById('darkModeToggle').textContent = newTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  });
 
     document.getElementById('lastSavedUrl').href = config.apiEndpoint;
     document.getElementById('lastSavedUrl').textContent = config.apiEndpoint;
@@ -104,9 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
     
-// });
-
-    //Paste text
     let pasteButton = document.getElementById('pasteBtn');
     pasteButton.addEventListener('click', function () {
         console.log("pasting");
@@ -118,8 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 err => console.log(err)
             );
     });
-
-    //Submit form
 
     const form = document.getElementById('urlForm');
     document.getElementById('urlForm').addEventListener('submit', function (e) {
@@ -161,8 +174,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-
-
     // Clear history:
     document.getElementById('clearHistoryButton').addEventListener('click', function () {
         // if (confirm('Are you sure you want to clear the history? This action cannot be undone.')) {
@@ -184,70 +195,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         // }
     });
-
-    function initializeDarkMode() {
-        const userPreference = getUserDarkModePreference();
-        const body = document.body;
-        const table = document.getElementById('historyTable');
-    
-        if (userPreference === true) {
-            body.classList.add('dark-mode');
-            table.classList.remove('table-striped');
-            table.classList.add('table-dark');
-        } else if (userPreference === false) {
-            body.classList.remove('dark-mode');
-            table.classList.remove('table-dark');
-            table.classList.add('table-striped');
-        } else {
-            // Apply system preference if no user preference is stored
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                body.classList.add('dark-mode');
-                table.classList.remove('table-striped');
-                table.classList.add('table-dark');
-            } else {
-                body.classList.remove('dark-mode');
-                table.classList.remove('table-dark');
-                table.classList.add('table-striped');
-            }
-        }
-    }
-    function toggleDarkMode() {
-        console.log("Toggling dark mode...");
-        const body = document.body;
-        const table = document.getElementById('historyTable');
-        const isDarkMode = body.classList.contains('dark-mode');
-    
-        if (isDarkMode) {
-            body.classList.remove('dark-mode');
-            table.classList.remove('table-dark');
-            table.classList.add('table-striped');
-            setUserDarkModePreference(false);
-        } else {
-            body.classList.add('dark-mode');
-            table.classList.remove('table-striped');
-            table.classList.add('table-dark');
-            setUserDarkModePreference(true);
-        }
-    }
-    
-    function setUserDarkModePreference(darkMode) {
-        localStorage.setItem('darkMode', darkMode.toString());
-    }
-
-    function getUserDarkModePreference() {
-        const storedPreference = localStorage.getItem('darkMode');
-        return storedPreference !== null ? storedPreference === 'true' : null;
-    }
-
-    // Initialize dark mode based on preference or system setting
-    initializeDarkMode();
-
-    // Setup toggle button listener
-    document.getElementById('darkModeToggle').addEventListener('click', function () {
-        toggleDarkMode();
-    });
-
-    //end dark mode
 
     document.getElementById('refreshBtn').addEventListener('click', function () {
         loadHistory();
