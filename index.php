@@ -1,83 +1,141 @@
 <?php
 
-// Allow requests from any origin
 header('Access-Control-Allow-Origin: *');
 header("X-Robots-Tag: noindex, nofollow", true);
 
-// Handle preflight requests for POST
+require_once 'config.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    handlePreflight();
+}
+
+$historyFile = $config['history_file'];
+$defaultUrl = $config['default_url'];
+$maxUrls = $config['max_urls'];
+$duration = $config['duration'];
+
+function handlePreflight() {
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-    header('Access-Control-Allow-Headers: Content-Type, Secret-Key');
+    header('Access-Control-Allow-Headers: Content-Type, Secret-Key'); //Secret-Key for compatability with legacy versions that use authentication
     exit(0);
 }
 
-// Include the configuration file
-require_once 'config.php';
+function saveUrl($url, $historyFile, $maxUrls) {
+    $history = loadHistory($historyFile);
+    array_unshift($history, ['url' => $url, 'timestamp' => time()]);
+    $history = array_slice($history, 0, $maxUrls);
+    file_put_contents($historyFile, json_encode($history));
+    return ['message' => 'URL submitted successfully'];
+}
 
-// Access configuration settings
-$history_file = $config['history_file'];
-$default_url = $config['default_url'];
-$max_urls = $config['max_urls'];
-$duration = $config['duration'];
+function loadHistory($historyFile) {
+    return file_exists($historyFile) ? json_decode(file_get_contents($historyFile), true) ?? [] : [];
+}
+
+function redirectToUrl($url) {
+    header("Location: $url", true, 303);
+    exit;
+}
+
+function sendJsonResponse($data, $statusCode = 200) {
+    header('Content-Type: application/json');
+    http_response_code($statusCode);
+    echo json_encode($data);
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $json_data = file_get_contents('php://input');
-    $data = json_decode($json_data, true);
-
+    $data = json_decode(file_get_contents('php://input'), true);
     if (isset($data['url'])) {
-        $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
-        
-        // Check if $history is null and initialize as an empty array if so
-        if ($history === null) {
-            $history = [];
-        }
-        
-        // Prepend the new URL with timestamp
-        array_unshift($history, ['url' => $data['url'], 'timestamp' => time()]);
-        
-        // Keep only the latest 10 URLs
-        $history = array_slice($history, 0, $max_urls);
-        
-        // Save the updated history
-        file_put_contents($history_file, json_encode($history));
-        
-        echo json_encode(['message' => 'URL submitted successfully']);
-        http_response_code(200);
-        exit;
+        $result = saveUrl($data['url'], $historyFile, $maxUrls);
+        sendJsonResponse($result);
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    handleGetRequest($config);
 }
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $history = file_exists($history_file) ? json_decode(file_get_contents($history_file), true) : [];
-
-    if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] == 'clearHistory') {
-        // Assuming your history is stored in 'url_history.json'
-        file_put_contents('url_history.json', json_encode([])); // Empty the history file
-        echo json_encode(['status' => 'success', 'message' => 'History cleared']);
-        exit;
-    } else if (isset($_GET['action']) && $_GET['action'] == 'latest') {
-        // Always redirect to the latest URL regardless of timestamp
-        if (!empty($history)) {
-            header("Location: " . $history[0]['url'], true, 303);
-            exit;
+function handleGetRequest($config) {
+    $history = loadHistory($config['history_file']);
+    if (isset($_GET['save'])) {
+        $url = urldecode($_GET['save']);
+        $result = saveUrl($url, $config['history_file'], $config['max_urls']); 
+        ?>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
+    <title>URL Saved</title>
+    <script type='text/javascript'>
+      setTimeout(function() {
+      window.close();
+        }, 2000);
+       </script>
+  </head>
+    <style>
+      body {
+        text-align: center;
+        padding: 40px 0;
+        background: #EBF0F5;
+      }
+        h1 {
+          color: #88B04B;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-weight: 900;
+          font-size: 40px;
+          margin-bottom: 10px;
         }
-    } else if (isset($_GET['action']) && $_GET['action'] == 'history') {
-        // Serve the history as JSON
-        header('Content-Type: application/json');
-        echo file_exists($history_file) ? file_get_contents($history_file) : json_encode([]);
-        exit;
-    }  else {
-
-        if (!empty($history) && (time() - $history[0]['timestamp']) <= $duration) {
-            header("Location: " . $history[0]['url'], true, 303);
-            exit;
-        } else {
-            header("Location: " . $default_url, true, 303);
-            exit;
+        p {
+          color: #404F5E;
+          font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+          font-size:20px;
+          margin: 0;
         }
+      i {
+        color: #9ABC66;
+        font-size: 100px;
+        line-height: 200px;
+        margin-left:-15px;
+      }
+      .card {
+        background: white;
+        padding: 60px;
+        border-radius: 4px;
+        box-shadow: 0 2px 3px #C8D0D8;
+        display: inline-block;
+        margin: 0 auto;
+      }
+    </style>
+    <body>
+      <div class="card">
+      <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
+        <i class="checkmark">✓</i>
+      </div>
+        <h1>Saved</h1> 
+        <p>The URL has been saved.<br/>This window will close automatically.</p>
+      </div>
+    </body>
+</html>
+
+<?php
+            exit;
+    } elseif (isset($_GET['action'])) {
+        switch ($_GET['action']) {
+            case 'latest':
+                !empty($history) ? redirectToUrl($history[0]['url']) : redirectToUrl($config['default_url']);
+                break;
+            case 'clearHistory':
+                file_put_contents($config['history_file'], json_encode([]));
+                sendJsonResponse(['status' => 'success', 'message' => 'History cleared']);
+                break;
+            case 'history':
+                sendJsonResponse($history);
+                break;
+            default:
+                sendJsonResponse(['message' => 'Action not recognized.'], 400);
+        }
+    } elseif (empty($_GET)) {
+        $url = !empty($history) && (time() - $history[0]['timestamp'] <= $config['duration']) ? $history[0]['url'] : $config['default_url'];
+        redirectToUrl($url);
+    } else {
+        sendJsonResponse(['message' => 'Invalid request'], 400);
     }
 }
-
-?>
