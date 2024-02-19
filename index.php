@@ -64,6 +64,8 @@ function handleGetRequest($config) {
   <head>
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700,900&display=swap" rel="stylesheet">
     <title>URL Saved</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <script type='text/javascript'>
       setTimeout(function() {
       window.close();
