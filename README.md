@@ -7,7 +7,7 @@ At its core, the app allows users to instantly share any URL to their smart TV. 
 ## Demo
 You can view a demo of the app here:
 - UI [https://dimak.pl/demos/tvshare/ui/](https://dimak.pl/demos/tvshare/ui/)
-- Redirection link: [https://dimak.pl/demos/tvshare/ui/](https://dimak.pl/demos/tvshare/)
+- Redirection link: [https://dimak.pl/demos/tvshare/](https://dimak.pl/demos/tvshare/)
 
 ## Practical Use Cases
 - **Quick Sharing to TV:** Easily share a cooking recipe, a YouTube video, or a news article from your phone or laptop directly to your TV.
