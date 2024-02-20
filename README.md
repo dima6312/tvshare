@@ -16,7 +16,8 @@ You can view a demo of the app here:
 
 ## How to Use It
 ### Setup the App on Your Smart TV:
-Set the homepage of your smart TV's web browser to the URL of this app.
+Set the homepage of your smart TV's web browser to the URL of this app. Alternatively, bookmark the URL for easy access when you'd like to be redirected to the saved link.
+
 ### Sharing a URL:
 - Use the JavaScript bookmarklet provided within the app's UI on your phone or computer to send the current page's URL directly to your smart TV.
 - For more integrated experiences, Chrome browser and iOS extensions (not included in this repo) can also be used.
