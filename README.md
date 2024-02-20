@@ -31,8 +31,9 @@ Set the homepage of your smart TV's web browser to the URL of this app. Alternat
 **Requirements:** A web server with PHP support (tested on PHP 7.4 and newer).
 ### Deploy the App:
 1. Upload the files to your server.
-2. Rename `config.example.js` to `config.js` and `config.example.php` to `config.php`, updating them with your actual configuration values.
-3. Ensure the `url_history.json` file is writable by the server (adjust file permissions as needed).
+2. Rename `config.example.js` to `config.js` and `config.example.php` to `config.php` (if deploying from source code, not a release package)
+3. Update `config.php` and `config.js` with your actual configuration values. 
+4. Ensure the `url_history.json` file is writable by the server (adjust file permissions as needed) otherwise PHP won't be able to save new URLs.
 
 ## Why This App?
 Unlike traditional methods that often involve cumbersome typing and app navigation, this solution provides a seamless, efficient way to share content between devices and your smart TV. It's particularly useful for users looking to enhance their home entertainment system's accessibility or simplify the process of sharing content in a professional setting.
