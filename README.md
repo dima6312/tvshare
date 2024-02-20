@@ -4,6 +4,9 @@ This app originated from a personal need for a quicker, more reliable method to 
 ## What Does This App Do?
 At its core, the app allows users to instantly share any URL to their smart TV. The TV's web browser is set to open the app's URL as its homepage, which then redirects to the most recently submitted URL. This setup streamlines the process of viewing web content on a larger screen, making it nearly instantaneous to share from phone or computer to TV.
 
+## Demo
+You can view a demo of the app [here](https://dimak.pl/demos/tvshare/ui/).
+
 ## Practical Use Cases
 - **Quick Sharing to TV:** Easily share a cooking recipe, a YouTube video, or a news article from your phone or laptop directly to your TV.
 - **Simplifying Presentations:** Share a presentation or document URL for viewing on a conference room's smart display without needing cables or casting devices.
