@@ -1,19 +1,12 @@
-{ 
-
+{
   "name": "TV Share",
-
-  "short_name": "TV Share", 
-
-  "display": "standalone", 
-
-  "icons": [{ 
-
-    "src": "180.png", 
-
-    "sizes": "180x180", 
-
-    "type": "image/png" 
-
-  }] 
-
+  "short_name": "TV Share",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
 }
