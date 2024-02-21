@@ -6,7 +6,7 @@ At its core, the app allows users to instantly share any URL to their smart TV. 
 
 ## Demo
 You can view a demo of the app (latest **release** version) here:
-- UI [https://dimak.pl/demos/tvshare/ui/](https://dimak.pl/demos/tvshare/ui/)
+- UI: [https://dimak.pl/demos/tvshare/ui/](https://dimak.pl/demos/tvshare/ui/)
 - Redirection link: [https://dimak.pl/demos/tvshare/](https://dimak.pl/demos/tvshare/)
 
 ## Practical Use Cases
